@@ -1,0 +1,79 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:598: checking for non-GNU ld
+configure:633: checking if the linker (ld) is GNU ld
+configure:672: checking how to run the C preprocessor
+configure:753: checking for inttypes.h
+configure:788: checking for stdint.h
+configure:823: checking for unsigned long long
+configure:874: checking for shared library run path origin
+configure:905: checking whether make sets ${MAKE}
+configure:943: checking for a BSD compatible install
+configure:1010: checking whether NLS is requested
+configure:1025: checking for gcc
+configure:1138: checking whether the C compiler (gcc -g -O2 ) works
+configure:1154: gcc -o conftest -g -O2   conftest.c  1>&5
+configure:1180: checking whether the C compiler (gcc -g -O2 ) is a cross-compiler
+configure:1185: checking whether we are using GNU C
+configure:1213: checking whether gcc accepts -g
+configure:1251: checking host system type
+configure:1274: checking for ranlib
+configure:1303: checking for strerror in -lcposix
+configure:1345: checking for ANSI C header files
+configure:1449: checking for working const
+configure:1524: checking for inline
+configure:1564: checking for off_t
+configure:1597: checking for size_t
+configure:1632: checking for working alloca.h
+configure:1665: checking for alloca
+configure:1867: checking for unistd.h
+configure:1906: checking for getpagesize
+configure:1959: checking for working mmap
+configure:2131: checking whether we are using the GNU C Library 2.1 or newer
+configure:2169: checking whether integer division by zero raises SIGFPE
+configure:2272: checking for inttypes.h
+configure:2311: checking whether the inttypes.h PRIxNN macros are broken
+configure:2768: checking for msgfmt
+configure:2806: checking for gmsgfmt
+configure:2872: checking for xgettext
+configure:2941: checking for msgmerge
+configure:3007: checking for argz.h
+configure:3007: checking for limits.h
+configure:3007: checking for locale.h
+configure:3007: checking for nl_types.h
+configure:3007: checking for malloc.h
+configure:3007: checking for stddef.h
+configure:3007: checking for stdlib.h
+configure:3007: checking for string.h
+configure:3007: checking for unistd.h
+configure:3007: checking for sys/param.h
+configure:3049: checking for feof_unlocked
+configure:3049: checking for fgets_unlocked
+configure:3049: checking for getc_unlocked
+configure:3049: checking for getcwd
+configure:3049: checking for getegid
+configure:3049: checking for geteuid
+configure:3049: checking for getgid
+configure:3049: checking for getuid
+configure:3049: checking for mempcpy
+configure:3049: checking for munmap
+configure:3049: checking for putenv
+configure:3049: checking for setenv
+configure:3049: checking for setlocale
+configure:3049: checking for stpcpy
+configure:3049: checking for strcasecmp
+configure:3049: checking for strdup
+configure:3049: checking for strtoul
+configure:3049: checking for tsearch
+configure:3049: checking for __argz_count
+configure:3049: checking for __argz_stringify
+configure:3049: checking for __argz_next
+configure:3049: checking for __fsetlocking
+configure:3133: checking for iconv
+configure:3208: checking for iconv declaration
+configure:3257: checking for nl_langinfo and CODESET
+configure:3293: checking for LC_MESSAGES
+configure:3332: checking for bison
+configure:3395: checking whether NLS is requested
+configure:3962: checking whether to use NLS

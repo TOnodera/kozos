@@ -1,0 +1,33 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:581: checking host system type
+configure:602: checking target system type
+configure:620: checking build system type
+configure:675: checking for a BSD compatible install
+configure:2866: checking for i686-pc-linux-gnu-ar
+configure:2899: checking for ar
+configure:2938: checking for i686-pc-linux-gnu-as
+configure:2971: checking for as
+configure:3010: checking for i686-pc-linux-gnu-dlltool
+configure:3043: checking for dlltool
+configure:3082: checking for i686-pc-linux-gnu-ld
+configure:3115: checking for ld
+configure:3154: checking for i686-pc-linux-gnu-nm
+configure:3187: checking for nm
+configure:3226: checking for i686-pc-linux-gnu-ranlib
+configure:3259: checking for ranlib
+configure:3298: checking for i686-pc-linux-gnu-windres
+configure:3331: checking for windres
+configure:3370: checking for i686-pc-linux-gnu-objcopy
+configure:3403: checking for objcopy
+configure:3442: checking for i686-pc-linux-gnu-objdump
+configure:3475: checking for objdump
+configure:3524: checking for h8300-elf-ar
+configure:3596: checking for h8300-elf-as
+configure:3668: checking for h8300-elf-dlltool
+configure:3740: checking for h8300-elf-ld
+configure:3812: checking for h8300-elf-nm
+configure:3884: checking for h8300-elf-ranlib
+configure:3956: checking for h8300-elf-windres
+configure:4056: checking whether to enable maintainer-specific portions of Makefiles
