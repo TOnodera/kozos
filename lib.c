@@ -98,7 +98,8 @@ int puts(unsigned char* str)
 {
 	while(*str)
 	{
-		putc(*(str++));
+		putc(*str);
+		str++;
 	}
 	return 0;
 }
@@ -145,7 +146,7 @@ int putxval(unsigned long value, int column)
     if (column) column--;
   }
 
-  puts(p + 1);
-
+  puts(p+1);
+  
   return 0;
 }
