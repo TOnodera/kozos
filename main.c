@@ -1,6 +1,7 @@
 #include "defines.h"
 #include "serial.h"
 #include "xmodem.h"
+#include "elf.h"
 #include "lib.h"
 
 int global_data = 0x10;
@@ -99,6 +100,8 @@ int main(void)
             putxval(size,0);
             putc('\n');
             dump(loadbuf,size);
+        }else if(!strcmp(buf,"run")){
+            elf_load(loadbuf);/*メモリ上に展開*/
         }else{
             puts("unknown.\n");
         }
