@@ -1,4 +1,5 @@
 #include "defines.h"
+#include "interrupt.h"
 #include "serial.h"
 #include "xmodem.h"
 #include "elf.h"
@@ -23,6 +24,9 @@ static int init(void)
 
     memcpy(&data_start,&erodata,(long)&edata - (long)&data_start);
     memset(&bss_start,0,(long)&ebss-(long)&bss_start);
+
+    /*ソフトウェア割り込みベクタを初期化する*/
+    softvec_init();
 
     serial_init(SERIAL_DEFAULT_DEVICE);
 
@@ -74,6 +78,9 @@ int main(void)
     char* entry_point;
     void (*f)(void);
 
+    /*最初の初期化処理は割り込み無効の状態で行う*/
+    INTR_DISABLE;
+
     init();
 
     puts("kzload (kozos boot loader) started.\n");
@@ -109,7 +116,7 @@ int main(void)
             }else{
                 puts("starting from entry point: ");
                 putxval((unsigned long)entry_point,0);
-                putc("\n");
+                putc('\n');
                 f = (void (*)(void))entry_point;
                 f();/*ここで、ロードしたプログラムに処理を渡す*/
                 /*ここには返ってこない*/
