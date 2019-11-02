@@ -3,12 +3,12 @@
 
 /*リンカスクリプトで定義してあるシンボル*/
 extern char softvec;
-#define SOFTVEC_ADDR (&softcec)
+#define SOFTVEC_ADDR (&softvec)
 
 typedef short softvec_type_t;/*ソフトウェア割り込みベクタの種別を表す型の定義*/
 typedef void (*softvec_handler_t)(softvec_type_t type,unsigned long sp);
 
-#define SOFTVECS((softvec_handler_t*)SOFTVEC_ADDR) /*ソフトウェア割り込みベクタの位置*/
+#define SOFTVECS ((softvec_handler_t*)SOFTVEC_ADDR) /*ソフトウェア割り込みベクタの位置*/
 
 #define INTR_ENEBLE asm volatile ("andc.b #0x3f,ccr")
 #define INTR_DISABLE asm volatile ("orc.b #0xc0,ccr")
