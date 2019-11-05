@@ -134,7 +134,7 @@ static kz_thread_id_t thread_run(kz_func_t func,char* name,int stacksize,
     *(--sp) = (uint32)thread_end;
 
     /*プログラムカウンタを設定する*/
-    *(--sp) = (uint32)thread_init;
+    *(--sp) = (uint32)thread_init;/*ER7*/
     *(--sp) = 0; /*ER6*/
     *(--sp) = 0; /*ER5*/
     *(--sp) = 0; /*ER4*/
@@ -146,7 +146,7 @@ static kz_thread_id_t thread_run(kz_func_t func,char* name,int stacksize,
     *(--sp) = (uint32)thp; /*ER0*/
 
     /*スレッドのコンテキストを設定*/
-    *(--sp) = (uint32)sp; /*コンテキストとしてスタックポインタを設定*/
+    thp->context.sp = (uint32)sp; /*コンテキストとしてスタックポインタを設定*/
 
     /*システムコールを呼び出したスレッドをレディーキューに戻す*/
     putcurrent();
@@ -167,4 +167,49 @@ static int thread_exit(void)
     memset(current,0,sizeof(*current));
 
     return 0;
+}
+
+static int setintr(softvec_type_t type,kz_handler_t handler)
+{
+    static void thread_intr(softvec_type_t type,unsigned long sp);
+
+    /**
+     *割り込みを受け付けるために、ソフトウェア割り込みベクタに 
+     * OSの割り込み処理の入り口となる関数を登録する。
+     */
+    softvec_setintr(type,thread_intr);
+
+    handlers[type] = handler;
+
+    return 0;
+}
+
+/*システムコールの処理関数の呼び出し*/
+static void call_functions(kz_syscall_type_t type,kz_syscall_param_t* p)
+{
+    switch (type)
+    {
+    case KZ_SYSCALL_TYPE_RUN:
+        p->un.run.ret = thread_run(p->un.run.func,p->un.run.name,
+                                    p->un.run.stacksize,
+                                    p->un.run.argc,p->un.run.argv);
+        break;
+    case KZ_SYSCALL_TYPE_EXIT:
+        thread_exit();
+        break;
+    default:
+        break;
+    }
+}
+
+static void syscall_proc(kz_syscall_type_t type,kz_syscall_param_t* p)
+{
+    /**
+     * システムコールを呼び出したスレッドをレディーキューから
+     * 外した状態で処理関数を呼び出す。このためシステムコールを
+     * 呼び出したスレッドをそのまま動作継続させたい場合は
+     * 処理関数の内部でputcurrent()を呼び出す必要がある。
+     */
+    getcurrent();
+    call_functions(type,p);
 }
