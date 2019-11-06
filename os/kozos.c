@@ -283,3 +283,19 @@ void kz_start(kz_func_t func,char* name,int stacksize,
 
     /*ここには返ってこない*/
 }
+
+void kz_sysdown(void)
+{
+    puts("system error.\n");
+    while(1)
+        ;
+}
+
+/*システムコールの呼び出し用ライブラリ関数*/
+void kz_syscall(kz_syscall_type_t type,kz_syscall_param_t* param)
+{
+    current->syscall.type = type;
+    current->syscall.param = param;
+    asm volatile ("trapa #0");/*トラップ割り込み(ソフトウェア割り込み)を発生させる*/
+}
+
