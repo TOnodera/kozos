@@ -213,3 +213,73 @@ static void syscall_proc(kz_syscall_type_t type,kz_syscall_param_t* p)
     getcurrent();
     call_functions(type,p);
 }
+
+static void schedule(void)
+{
+    if(!readyque.head)
+    {
+        kz_sysdown();/*レディーキューが見つからなかったらdown*/
+    }
+
+    current = readyque.head;/*レディーキューの先頭をカレントスレッドにする*/
+}
+
+static void softerr_intr(void)
+{
+    puts(current->name);
+    puts("DOWN.\n");
+
+    getcurrent();/*レディーキューから外す*/
+    thread_exit();/*スレッドを終了する*/
+
+}
+
+/*割り込み処理の入り口関数*/
+static void thread_intr(softvec_type_t type,unsigned long sp)
+{
+    /*カレントスレッドのコンテキストを保存*/
+    current->context.sp = sp;
+
+    /**
+     * 割り込みごとの処理を実行する。
+     * syscall_intr(),softerr_intr()がハンドラに登録されているので、
+     * それらが実行される。
+     */
+    if(handlers[type])
+    {
+        handlers[type]();
+    }
+
+    schedule();/*スケジューリング*/
+
+    /**
+     * スレッドのディスパッチ
+     * dispatch()の本体はstartup.sにある
+     */
+    dispatch(&current->context);/*スケジューリングされたスレッドをディスパッチ*/
+}
+
+void kz_start(kz_func_t func,char* name,int stacksize,
+                int argc,char* argv[])
+{
+    /**
+     * 以降で呼び出すスレッド関連のライブラリ関数の内部でcurrentを
+     * 見ている場合があるので、currentをNULLにしておく
+     */
+    current = NULL;
+    readyque.head = readyque.tail = NULL;
+
+    memset(threads,0,sizeof(threads));
+    memset(handlers,0,sizeof(handlers));
+
+    /*割り込みハンドラの登録*/
+    setintr(SOFTVEC_TYPE_SYSCALL,syscall_intr);/*システムコール*/
+    setintr(SOFTVEC_TYPE_SOFTERR,softerr_intr);/*ダウン要因*/
+
+    current = (kz_thread*)thread_run(func,name,stacksize,argc,argv);/*初期スレッドを生成*/
+
+    /*最初のスレッドを起動*/
+    dispatch(&current->context);
+
+    /*ここには返ってこない*/
+}
