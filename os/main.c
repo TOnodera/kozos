@@ -6,7 +6,7 @@
 /*システムタスクとユーザースレッドの起動*/
 static int start_threads(int argc,char* argv[])
 {
-    kz_run(test_08_1_main,"command",0x100,0,NULL);
+    kz_run(test08_1_main,"command",0x100,0,NULL);
     return 0;
 }
 
@@ -22,3 +22,4 @@ int main(void)
 
     return 0;
 }
+

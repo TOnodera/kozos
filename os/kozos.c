@@ -224,6 +224,11 @@ static void schedule(void)
     current = readyque.head;/*レディーキューの先頭をカレントスレッドにする*/
 }
 
+static void syscall_intr(void)
+{
+    syscall_proc(current->syscall.type,current->syscall.param);
+}
+
 static void softerr_intr(void)
 {
     puts(current->name);

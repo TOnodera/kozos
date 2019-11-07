@@ -5,7 +5,7 @@
 #include "syscall.h"
 
 /*システムコール*/
-kz_thread_id_t kz_run(kz_func_f func,char* name,int stacksize,
+kz_thread_id_t kz_run(kz_func_t func,char* name,int stacksize,
                     int argc,char* argv[]);
 void kz_exit();
 /*ライブラリ関数*/
