@@ -19,7 +19,7 @@ int test09_1_main(int argc,char* argv[])
     puts("test09_1 wait out.\n");
 
     puts("test09_1 trap in.\n");
-    asm volatile("trapa #1");
+    asm volatile ("trapa #1");
     puts("test09_1 trap out.\n");
 
     puts("test09_1 exit.\n");

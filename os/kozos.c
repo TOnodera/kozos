@@ -298,11 +298,11 @@ static void schedule(void)
         if(readyque[i].head){
             break;/*見つかった*/
         }
-        if(i == PRIORITY_NUM){
-            kz_sysdown();/*見つからなかった*/
-        }
-        current = readyque[i].head; /*カレントスレッドに設定する*/
     }
+    if(i == PRIORITY_NUM){
+        kz_sysdown();/*見つからなかった*/
+    }
+    current = readyque[i].head; /*カレントスレッドに設定する*/
 }
 
 static void syscall_intr(void)
@@ -313,7 +313,7 @@ static void syscall_intr(void)
 static void softerr_intr(void)
 {
     puts(current->name);
-    puts("DOWN.\n");
+    puts(":DOWNDOWN\n");
 
     getcurrent();/*レディーキューから外す*/
     thread_exit();/*スレッドを終了する*/
