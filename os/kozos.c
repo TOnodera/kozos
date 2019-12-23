@@ -313,7 +313,7 @@ static void syscall_intr(void)
 static void softerr_intr(void)
 {
     puts(current->name);
-    puts(":DOWNDOWN\n");
+    puts(":DOWN\n");
 
     getcurrent();/*レディーキューから外す*/
     thread_exit();/*スレッドを終了する*/

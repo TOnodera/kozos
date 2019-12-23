@@ -176,3 +176,11 @@ int gets(unsigned char* buf)
 
 	return i-1;
 }
+
+/*スレッドテスト用関数*/
+void numberDump(char c)
+{
+	puts("number = ");
+	putc(c);
+	puts("\n");
+}
