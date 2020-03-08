@@ -228,6 +228,21 @@ static int thread_chpri(int priority)
     return old;
 }
 
+/*動的メモリ獲得*/
+static void* thread_kmalloc(int size)
+{
+    putcurrent();
+    return kzmem_alloc(size);
+}
+
+/*メモリ解放*/
+static int thread_kmfree(char* p)
+{
+    kzmem_free(p);
+    putcurrent();
+    return 0;
+}
+
 static int setintr(softvec_type_t type,kz_handler_t handler)
 {
     static void thread_intr(softvec_type_t type,unsigned long sp);
@@ -271,6 +286,12 @@ static void call_functions(kz_syscall_type_t type,kz_syscall_param_t* p)
         break;
     case KZ_SYSCALL_TYPE_CHPRI:
         p->un.chpri.ret = thread_chpri(p->un.chpri.priority);
+        break;
+    case KZ_SYSCALL_TYPE_KMALLOC:
+        p->un.kmalloc.ret = thread_kmalloc(p->un.kmalloc.size);
+        break;
+    case KZ_SYSCALL_TYPE_KMFREE:
+        p->un.kmfree.ret = thread_kmfree(p->un.kmfree.p);
         break;
     default:
         break;
@@ -348,6 +369,7 @@ static void thread_intr(softvec_type_t type,unsigned long sp)
 void kz_start(kz_func_t func,char* name,int priority,int stacksize,
                 int argc,char* argv[])
 {
+    kzmem_init();/*動的メモリの初期化*/
     /**
      * 以降で呼び出すスレッド関連のライブラリ関数の内部でcurrentを
      * 見ている場合があるので、currentをNULLにしておく
