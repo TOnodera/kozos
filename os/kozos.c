@@ -4,6 +4,7 @@
 #include "interrupt.h"
 #include "syscall.h"
 #include "lib.h"
+#include "memory.h"
 
 #define THREAD_NUM 6
 #define PRIORITY_NUM 16
